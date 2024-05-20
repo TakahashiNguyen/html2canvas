@@ -14,37 +14,37 @@ const banner = `/*
  */`;
 
 export default {
-    input: `tests/testrunner.ts`,
-    output: [
-        {
-            file: resolve(__dirname, '../build/testrunner.js'),
-            name: 'testrunner',
-            format: 'iife',
-            banner,
-            sourcemap: true
-        }
-    ],
-    external: [],
-    watch: {
-        include: 'tests/**'
-    },
-    plugins: [
-        // Allow node_modules resolution, so you can use 'external' to control
-        // which external modules to include in the bundle
-        // https://github.com/rollup/rollup-plugin-node-resolve#usage
-        nodeResolve(),
-        // Allow json resolution
-        json(),
-        // Compile TypeScript files
-        typescript({
-            tsconfig: resolve(__dirname, 'tsconfig.json')
-        }),
-        // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
-        commonjs({
-            include: 'node_modules/**'
-        }),
+	input: `tests/testrunner.ts`,
+	output: [
+		{
+			file: resolve(__dirname, '../build/testrunner.js'),
+			name: 'testrunner',
+			format: 'iife',
+			banner,
+			sourcemap: true
+		}
+	],
+	external: [],
+	watch: {
+		include: 'tests/**'
+	},
+	plugins: [
+		// Allow node_modules resolution, so you can use 'external' to control
+		// which external modules to include in the bundle
+		// https://github.com/rollup/rollup-plugin-node-resolve#usage
+		nodeResolve(),
+		// Allow json resolution
+		json(),
+		// Compile TypeScript files
+		typescript({
+			tsconfig: resolve(__dirname, 'tsconfig.json')
+		}),
+		// Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
+		commonjs({
+			include: 'node_modules/**'
+		}),
 
-        // Resolve source maps to the original source
-        sourceMaps()
-    ]
+		// Resolve source maps to the original source
+		sourceMaps()
+	]
 };

@@ -15,98 +15,94 @@ import {Context} from '../core/context';
 const LIST_OWNERS = ['OL', 'UL', 'MENU'];
 
 const parseNodeTree = (context: Context, node: Node, parent: ElementContainer, root: ElementContainer) => {
-    for (let childNode = node.firstChild, nextNode; childNode; childNode = nextNode) {
-        nextNode = childNode.nextSibling;
+	for (let childNode = node.firstChild, nextNode; childNode; childNode = nextNode) {
+		nextNode = childNode.nextSibling;
 
-        if (isTextNode(childNode) && childNode.data.trim().length > 0) {
-            parent.textNodes.push(new TextContainer(context, childNode, parent.styles));
-        } else if (isElementNode(childNode)) {
-            if (isSlotElement(childNode) && childNode.assignedNodes) {
-                childNode.assignedNodes().forEach((childNode) => parseNodeTree(context, childNode, parent, root));
-            } else {
-                const container = createContainer(context, childNode);
-                if (container.styles.isVisible()) {
-                    if (createsRealStackingContext(childNode, container, root)) {
-                        container.flags |= FLAGS.CREATES_REAL_STACKING_CONTEXT;
-                    } else if (createsStackingContext(container.styles)) {
-                        container.flags |= FLAGS.CREATES_STACKING_CONTEXT;
-                    }
+		if (isTextNode(childNode) && childNode.data.trim().length > 0) {
+			parent.textNodes.push(new TextContainer(context, childNode, parent.styles));
+		} else if (isElementNode(childNode)) {
+			if (isSlotElement(childNode) && childNode.assignedNodes) {
+				childNode.assignedNodes().forEach((childNode) => parseNodeTree(context, childNode, parent, root));
+			} else {
+				const container = createContainer(context, childNode);
+				if (container.styles.isVisible()) {
+					if (createsRealStackingContext(childNode, container, root)) {
+						container.flags |= FLAGS.CREATES_REAL_STACKING_CONTEXT;
+					} else if (createsStackingContext(container.styles)) {
+						container.flags |= FLAGS.CREATES_STACKING_CONTEXT;
+					}
 
-                    if (LIST_OWNERS.indexOf(childNode.tagName) !== -1) {
-                        container.flags |= FLAGS.IS_LIST_OWNER;
-                    }
+					if (LIST_OWNERS.indexOf(childNode.tagName) !== -1) {
+						container.flags |= FLAGS.IS_LIST_OWNER;
+					}
 
-                    parent.elements.push(container);
-                    childNode.slot;
-                    if (childNode.shadowRoot) {
-                        parseNodeTree(context, childNode.shadowRoot, container, root);
-                    } else if (
-                        !isTextareaElement(childNode) &&
-                        !isSVGElement(childNode) &&
-                        !isSelectElement(childNode)
-                    ) {
-                        parseNodeTree(context, childNode, container, root);
-                    }
-                }
-            }
-        }
-    }
+					parent.elements.push(container);
+					childNode.slot;
+					if (childNode.shadowRoot) {
+						parseNodeTree(context, childNode.shadowRoot, container, root);
+					} else if (!isTextareaElement(childNode) && !isSVGElement(childNode) && !isSelectElement(childNode)) {
+						parseNodeTree(context, childNode, container, root);
+					}
+				}
+			}
+		}
+	}
 };
 
 const createContainer = (context: Context, element: Element): ElementContainer => {
-    if (isImageElement(element)) {
-        return new ImageElementContainer(context, element);
-    }
+	if (isImageElement(element)) {
+		return new ImageElementContainer(context, element);
+	}
 
-    if (isCanvasElement(element)) {
-        return new CanvasElementContainer(context, element);
-    }
+	if (isCanvasElement(element)) {
+		return new CanvasElementContainer(context, element);
+	}
 
-    if (isSVGElement(element)) {
-        return new SVGElementContainer(context, element);
-    }
+	if (isSVGElement(element)) {
+		return new SVGElementContainer(context, element);
+	}
 
-    if (isLIElement(element)) {
-        return new LIElementContainer(context, element);
-    }
+	if (isLIElement(element)) {
+		return new LIElementContainer(context, element);
+	}
 
-    if (isOLElement(element)) {
-        return new OLElementContainer(context, element);
-    }
+	if (isOLElement(element)) {
+		return new OLElementContainer(context, element);
+	}
 
-    if (isInputElement(element)) {
-        return new InputElementContainer(context, element);
-    }
+	if (isInputElement(element)) {
+		return new InputElementContainer(context, element);
+	}
 
-    if (isSelectElement(element)) {
-        return new SelectElementContainer(context, element);
-    }
+	if (isSelectElement(element)) {
+		return new SelectElementContainer(context, element);
+	}
 
-    if (isTextareaElement(element)) {
-        return new TextareaElementContainer(context, element);
-    }
+	if (isTextareaElement(element)) {
+		return new TextareaElementContainer(context, element);
+	}
 
-    if (isIFrameElement(element)) {
-        return new IFrameElementContainer(context, element);
-    }
+	if (isIFrameElement(element)) {
+		return new IFrameElementContainer(context, element);
+	}
 
-    return new ElementContainer(context, element);
+	return new ElementContainer(context, element);
 };
 
 export const parseTree = (context: Context, element: HTMLElement): ElementContainer => {
-    const container = createContainer(context, element);
-    container.flags |= FLAGS.CREATES_REAL_STACKING_CONTEXT;
-    parseNodeTree(context, element, container, container);
-    return container;
+	const container = createContainer(context, element);
+	container.flags |= FLAGS.CREATES_REAL_STACKING_CONTEXT;
+	parseNodeTree(context, element, container, container);
+	return container;
 };
 
 const createsRealStackingContext = (node: Element, container: ElementContainer, root: ElementContainer): boolean => {
-    return (
-        container.styles.isPositionedWithZIndex() ||
-        container.styles.opacity < 1 ||
-        container.styles.isTransformed() ||
-        (isBodyElement(node) && root.styles.isTransparent())
-    );
+	return (
+		container.styles.isPositionedWithZIndex() ||
+		container.styles.opacity < 1 ||
+		container.styles.isTransformed() ||
+		(isBodyElement(node) && root.styles.isTransparent())
+	);
 };
 
 const createsStackingContext = (styles: CSSParsedDeclaration): boolean => styles.isPositioned() || styles.isFloating();
@@ -114,9 +110,9 @@ const createsStackingContext = (styles: CSSParsedDeclaration): boolean => styles
 export const isTextNode = (node: Node): node is Text => node.nodeType === Node.TEXT_NODE;
 export const isElementNode = (node: Node): node is Element => node.nodeType === Node.ELEMENT_NODE;
 export const isHTMLElementNode = (node: Node): node is HTMLElement =>
-    isElementNode(node) && typeof (node as HTMLElement).style !== 'undefined' && !isSVGElementNode(node);
+	isElementNode(node) && typeof (node as HTMLElement).style !== 'undefined' && !isSVGElementNode(node);
 export const isSVGElementNode = (element: Element): element is SVGElement =>
-    typeof (element as SVGElement).className === 'object';
+	typeof (element as SVGElement).className === 'object';
 export const isLIElement = (node: Element): node is HTMLLIElement => node.tagName === 'LI';
 export const isOLElement = (node: Element): node is HTMLOListElement => node.tagName === 'OL';
 export const isInputElement = (node: Element): node is HTMLInputElement => node.tagName === 'INPUT';
