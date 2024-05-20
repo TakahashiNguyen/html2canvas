@@ -1,10 +1,10 @@
 import {IPropertyTokenValueDescriptor, PropertyDescriptorParsingType} from '../IPropertyDescriptor';
 
 const marginForSide = (side: string): IPropertyTokenValueDescriptor => ({
-    name: `margin-${side}`,
-    initialValue: '0',
-    prefix: false,
-    type: PropertyDescriptorParsingType.TOKEN_VALUE
+	name: `margin-${side}`,
+	initialValue: '0',
+	prefix: false,
+	type: PropertyDescriptorParsingType.TOKEN_VALUE
 });
 
 export const marginTop: IPropertyTokenValueDescriptor = marginForSide('top');

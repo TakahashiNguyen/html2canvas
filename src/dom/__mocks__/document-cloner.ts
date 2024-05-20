@@ -1,22 +1,22 @@
 export class DocumentCloner {
-    clonedReferenceElement?: HTMLElement;
+	clonedReferenceElement?: HTMLElement;
 
-    constructor() {
-        this.clonedReferenceElement = {
-            ownerDocument: {
-                defaultView: {
-                    pageXOffset: 12,
-                    pageYOffset: 34
-                }
-            }
-        } as HTMLElement;
-    }
+	constructor() {
+		this.clonedReferenceElement = {
+			ownerDocument: {
+				defaultView: {
+					pageXOffset: 12,
+					pageYOffset: 34
+				}
+			}
+		} as HTMLElement;
+	}
 
-    toIFrame(): Promise<HTMLIFrameElement> {
-        return Promise.resolve({} as HTMLIFrameElement);
-    }
+	toIFrame(): Promise<HTMLIFrameElement> {
+		return Promise.resolve({} as HTMLIFrameElement);
+	}
 
-    static destroy(): boolean {
-        return true;
-    }
+	static destroy(): boolean {
+		return true;
+	}
 }

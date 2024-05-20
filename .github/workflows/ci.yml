@@ -2,35 +2,35 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
     tags:
       - 'v*'
   pull_request:
-    branches: [ master ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Build
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@main
+      - uses: actions/setup-node@main
         with:
-          node-version: 12
-      - name: Cache node modules
-        uses: actions/cache@v2
+          node-version: 20
+      - uses: actions/cache@main
         env:
           cache-name: cache-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          path: |
+            ~/.npm
+            ./node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: Npm install
-        run: npm ci
+        run: npm install && npm ci
       - name: Build
         run: npm run build
       - name: Pack
@@ -39,19 +39,19 @@ jobs:
           mv html2canvas-*.tgz html2canvas.tgz
           tar --list --verbose --file=html2canvas.tgz
       - name: Upload npm pack
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@main
         with:
           name: npm
           path: html2canvas.tgz
           if-no-files-found: error
       - name: Upload dist
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@main
         with:
           name: dist
           path: dist
           if-no-files-found: error
       - name: Upload build
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@main
         with:
           name: build
           path: build
@@ -61,27 +61,31 @@ jobs:
     runs-on: ubuntu-latest
     name: Test
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@main
+      - uses: actions/setup-node@main
         with:
-          node-version: 12
+          node-version: 20
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@main
         env:
           cache-name: cache-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          path: |
+            ~/.npm
+            ./node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: Npm install
-        run: npm ci
+        run: npm install && npm ci
+      - name: Format
+        run: npm run format
       - name: Build
         run: npm run build
-      - name: Lint
+      - name: File tests
         run: npm run lint
       - name: Unit tests
         run: npm run unittest
@@ -101,66 +105,34 @@ jobs:
           - os: macos-latest
             name: OSX Safari Stable
             targetBrowser: Safari_Stable
-          - os: macos-10.15
-            name: iOS Simulator Safari 12
-            targetBrowser: Safari_IOS_12
-            xcode: /Applications/Xcode_10.3.app
-          - os: macos-10.15
-            name: iOS Simulator Safari 13
-            targetBrowser: Safari_IOS_13
-            xcode: /Applications/Xcode_11.7.app
-          - os: macos-10.15
-            name: iOS Simulator Safari 14
-            targetBrowser: Safari_IOS_14
-            xcode: /Applications/Xcode_12.4.app
-          - os: macos-11
-            name: iOS Simulator Safari 15.0
-            targetBrowser: Safari_IOS_15_0
-            xcode: /Applications/Xcode_13.0.app
-          - os: macos-11
-            name: iOS Simulator Safari 15
-            targetBrowser: Safari_IOS_15
-            xcode: /Applications/Xcode_13.2.app
-          - os: windows-latest
-            name: Windows Internet Explorer 9 (Emulated)
-            targetBrowser: IE_9
-          - os: windows-latest
-            name: Windows Internet Explorer 10 (Emulated)
-            targetBrowser: IE_10
-          - os: windows-latest
-            name: Windows Internet Explorer 11
-            targetBrowser: IE_11
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.name }}
     env:
       TARGET_BROWSER: ${{ matrix.config.targetBrowser }}
     needs: build
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@main
+      - uses: actions/setup-node@main
         with:
-          node-version: 12
+          node-version: 20
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@main
         env:
           cache-name: cache-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          path: |
+            ~/.npm
+            ./node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: Npm install
-        run: npm ci
-      - name: Download library
-        uses: actions/download-artifact@v2
-        with:
-          name: dist
-          path: dist
+        run: npm install && npm ci
       - name: Download test-runner
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@main
         with:
           name: build
           path: build
@@ -177,107 +149,45 @@ jobs:
         if: ${{ matrix.config.xvfb == true }}
         run: DISPLAY=:99 npm run karma
       - name: Upload screenshots
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@main
         with:
-          name: reftest-results
+          name: reftest-results-${{ matrix.config.targetBrowser }}
           path: tmp/reftests
           if-no-files-found: error
-  publish:
-    runs-on: ubuntu-latest
-    name: Publish
-    if: startsWith(github.ref, 'refs/tags/v')
-    needs: browser-test
-    steps:
-      - uses: actions/checkout@v2
-      - name: Download NPM package
-        uses: actions/download-artifact@v2
-        with:
-          name: npm
-          path: npm
-      - name: Download library
-        uses: actions/download-artifact@v2
-        with:
-          name: dist
-          path: dist
-      - name: Create Github Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          draft: false
-          prerelease: ${{ contains(github.ref, '-rc.') || contains(github.ref, '-alpha.') }}
-      - name: Upload html2canvas.js
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/html2canvas.js
-          asset_name: html2canvas.js
-          asset_content_type: text/javascript
-      - name: Upload html2canvas.min.js
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/html2canvas.min.js
-          asset_name: html2canvas.min.js
-          asset_content_type: text/javascript
-      - name: Upload html2canvas.esm.js
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/html2canvas.esm.js
-          asset_name: html2canvas.esm.js
-          asset_content_type: text/javascript
-      - name: Unpack npm
-        run: cd npm && tar -xvzf "html2canvas.tgz"
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-          registry-url: 'https://registry.npmjs.org'
-      - name: NPM Publish
-        run: cd npm/package && npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
   docs:
     runs-on: ubuntu-latest
     name: Build docs
     needs: browser-test
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@main
+      - uses: actions/setup-node@main
         with:
-          node-version: 12
+          node-version: 20
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@main
         env:
           cache-name: cache-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          path: |
+            ~/.npm
+            ./node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: Npm install
-        run: npm ci
+        run: npm install && npm ci
       - name: Download library
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@main
         with:
           name: dist
           path: www/static/dist
       - name: Download test results
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@main
         with:
-          name: reftest-results
+          name: reftest-results-Chrome_Stable
           path: www/static/results
       - name: Copy reftests to docs website
         run: cp -R tests/reftests www/static/tests/reftests && cp -R tests/assets www/static/tests/assets && cp tests/test.js www/static/tests/test.js
@@ -290,7 +200,7 @@ jobs:
       - name: Build docs
         run: npm run build && cd www && npm install && npm run build && cd ..
       - name: Upload docs
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@main
         with:
           name: docs
           path: www/public
@@ -301,11 +211,11 @@ jobs:
     if: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v') }}
     needs: docs
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@main
         with:
           persist-credentials: false
       - name: Download docs
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@main
         with:
           name: docs
           path: docs
@@ -317,43 +227,3 @@ jobs:
           FOLDER: docs
           SINGLE_COMMIT: true
           CLEAN: true
-  diff-reftests:
-    runs-on: ubuntu-latest
-    name: Diff reftest screenshots
-    needs: browser-test
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Npm install
-        run: npm ci
-      - name: Checkout current snapshots
-        run: git checkout origin/gh-pages results
-      - name: Download test results
-        uses: actions/download-artifact@v2
-        with:
-          name: reftest-results
-          path: tmp/reftests
-      - name: Run diff
-        run: npm run reftests-diff
-        continue-on-error: true
-      - name: Upload diff
-        uses: actions/upload-artifact@v2
-        with:
-          name: snapshot-diffs
-          path: tmp/snapshot-diffs

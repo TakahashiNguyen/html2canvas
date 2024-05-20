@@ -2,16 +2,16 @@ import {IPropertyValueDescriptor, PropertyDescriptorParsingType} from '../IPrope
 import {CSSValue, isDimensionToken} from '../syntax/parser';
 import {Context} from '../../core/context';
 const borderWidthForSide = (side: string): IPropertyValueDescriptor<number> => ({
-    name: `border-${side}-width`,
-    initialValue: '0',
-    type: PropertyDescriptorParsingType.VALUE,
-    prefix: false,
-    parse: (_context: Context, token: CSSValue): number => {
-        if (isDimensionToken(token)) {
-            return token.number;
-        }
-        return 0;
-    }
+	name: `border-${side}-width`,
+	initialValue: '0',
+	type: PropertyDescriptorParsingType.VALUE,
+	prefix: false,
+	parse: (_context: Context, token: CSSValue): number => {
+		if (isDimensionToken(token)) {
+			return token.number;
+		}
+		return 0;
+	}
 });
 
 export const borderTopWidth: IPropertyValueDescriptor<number> = borderWidthForSide('top');
