@@ -102,6 +102,19 @@ jobs:
             name: Linux Chrome Stable
             targetBrowser: Chrome_Stable
             xvfb: true
+          - os: windows-latest
+            name: Windows Firefox Stable
+            targetBrowser: Firefox_Stable
+          - os: windows-latest
+            name: Windows Chrome Stable
+            targetBrowser: Chrome_Stable
+          - os: macos-latest
+            name: OSX Firefox Stable
+            targetBrowser: Firefox_Stable
+            xvfb: true
+          - os: macos-latest
+            name: OSX Chrome Stable
+            targetBrowser: Chrome_Stable
           - os: macos-latest
             name: OSX Safari Stable
             targetBrowser: Safari_Stable
