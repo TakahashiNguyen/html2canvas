@@ -142,6 +142,11 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+      - name: Download library
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
       - name: Npm install
         run: npm install && npm ci
       - name: Download test-runner
