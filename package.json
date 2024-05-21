@@ -95,7 +95,10 @@
   "dependencies": {
     "css-line-break": "^2.1.0",
     "js-polyfills": "^0.1.43",
+    "karma-chrome-launcher": "^3.2.0",
+    "karma-firefox-launcher": "^2.1.3",
     "karma-junit-reporter": "^2.0.1",
+    "karma-safarinative-launcher": "^1.1.0",
     "mkdirp": "^3.0.1",
     "text-segmentation": "^1.0.3"
   }
