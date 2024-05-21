@@ -156,12 +156,12 @@ jobs:
       - name: Run browser tests
         run: npm run karma
 
-      # - name: Upload screenshots
-      #   uses: actions/upload-artifact@main
-      #   with:
-      #     name: reftest-${{runner.os}}-${{ matrix.config.targetBrowser }}
-      #     path: tmp/reftests
-      #     if-no-files-found: error
+      - name: Upload screenshots
+        uses: actions/upload-artifact@main
+        with:
+          name: reftest-${{runner.os}}-${{ matrix.config.targetBrowser }}
+          path: tmp/reftests
+          if-no-files-found: error
   docs:
     runs-on: ubuntu-latest
     name: Build docs
@@ -195,7 +195,7 @@ jobs:
       - name: Download test results
         uses: actions/download-artifact@main
         with:
-          name: reftest-results-Chrome_Stable
+          name: reftest-Linux-Chrome_Stable
           path: www/static/results
       - name: Copy reftests to docs website
         run: cp -R tests/reftests www/static/tests/reftests && cp -R tests/assets www/static/tests/assets && cp tests/test.js www/static/tests/test.js
