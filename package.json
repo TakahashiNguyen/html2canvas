@@ -94,6 +94,8 @@
   "license": "MIT",
   "dependencies": {
     "css-line-break": "^2.1.0",
+    "js-polyfills": "^0.1.43",
+    "karma-junit-reporter": "^2.0.1",
     "mkdirp": "^3.0.1",
     "text-segmentation": "^1.0.3"
   }
