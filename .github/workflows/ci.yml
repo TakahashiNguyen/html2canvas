@@ -83,6 +83,8 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+      - name: Npm install
+        run: npm install && npm ci
       - name: File tests
         run: npm run lint
       - name: Unit tests
