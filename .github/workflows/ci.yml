@@ -118,6 +118,8 @@ jobs:
       TARGET_BROWSER: ${{ matrix.config.targetBrowser }}
     needs: build
     steps:
+      - name: Setup headless display
+        uses: pyvista/setup-headless-display-action@main
       - uses: actions/checkout@main
       - uses: actions/setup-node@main
         with:
