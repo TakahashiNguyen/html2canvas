@@ -3,8 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from '@rollup/plugin-typescript';
 import json from '@rollup/plugin-json';
-
-const pkg = require('./package.json');
+import * as pkg from './package.json';
 
 const banner = `/*!
  * ${pkg.title} ${pkg.version} <${pkg.homepage}>

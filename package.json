@@ -74,11 +74,11 @@
   },
   "scripts": {
     "prebuild": "rimraf dist/ && rimraf build/ && mkdirp dist && mkdirp build",
-    "build": "tsc --module commonjs && rollup -c rollup.config.ts && npm run build:create-reftest-list && npm run build:testrunner && npm run build:minify",
-    "build:testrunner": "rollup -c tests/rollup.config.ts",
+    "build": "tsc --module commonjs && rollup -c rollup.config.ts --bundleConfigAsCjs && npm run build:create-reftest-list && npm run build:testrunner && npm run build:minify",
+    "build:testrunner": "rollup -c tests/rollup.config.ts --bundleConfigAsCjs",
     "build:minify": "uglifyjs --compress --comments /^!/ -o dist/html2canvas.min.js --mangle -- dist/html2canvas.js",
     "build:reftest-result-list": "ts-node scripts/create-reftest-result-list.ts",
-    "build:create-reftest-list": "ts-node scripts/create-reftest-list.ts tests/reftests/ignore.txt build/reftests.ts",
+    "build:create-reftest-list": "tsx scripts/create-reftest-list.ts tests/reftests/ignore.txt build/reftests.ts",
     "build:reftest-preview": "webpack --config www/webpack.config.js",
     "release": "standard-version",
     "format": "prettier --write \"{src,www/src,tests,scripts}/**/*.ts\"",
@@ -102,6 +102,7 @@
     "karma-junit-reporter": "^2.0.1",
     "karma-safarinative-launcher": "^1.1.0",
     "mkdirp": "^3.0.1",
-    "text-segmentation": "^1.0.3"
+    "text-segmentation": "^1.0.3",
+    "tsx": "^4.10.5"
   }
 }

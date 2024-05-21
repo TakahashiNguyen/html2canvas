@@ -28,6 +28,7 @@ export const transform: IPropertyValueDescriptor<Transform> = {
 };
 
 const matrix = (args: CSSValue[]): Transform => {
+	// @ts-ignore
 	const values = args.filter((arg) => arg.type === TokenType.NUMBER_TOKEN).map((arg: NumberValueToken) => arg.number);
 
 	return values.length === 6 ? (values as Matrix) : null;
@@ -35,6 +36,7 @@ const matrix = (args: CSSValue[]): Transform => {
 
 // doesn't support 3D transforms at the moment
 const matrix3d = (args: CSSValue[]): Transform => {
+	// @ts-ignore
 	const values = args.filter((arg) => arg.type === TokenType.NUMBER_TOKEN).map((arg: NumberValueToken) => arg.number);
 
 	const [a1, b1, {}, {}, a2, b2, {}, {}, {}, {}, {}, {}, a4, b4, {}, {}] = values;

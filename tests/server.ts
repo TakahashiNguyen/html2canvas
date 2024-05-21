@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 const cors = require('cors');
 const path = require('path');
 const serveIndex = require('serve-index');
@@ -80,14 +80,20 @@ screenshotApp.use((error: Error, _req: express.Request, _res: express.Response, 
 
 const args = yargs(process.argv.slice(2)).number(['port', 'cors']).argv;
 
+// @ts-ignore
 if (args.port) {
+	// @ts-ignore
 	app.listen(args.port, () => {
+		// @ts-ignore
 		console.log(`Server running on port ${args.port}`);
 	});
 }
 
+// @ts-ignore
 if (args.cors) {
+	// @ts-ignore
 	corsApp.listen(args.cors, () => {
+		// @ts-ignore
 		console.log(`CORS server running on port ${args.cors}`);
 	});
 }
