@@ -53,7 +53,11 @@ export class DocumentCloner {
 	private readonly counters: CounterState;
 	private quoteDepth: number;
 
-	constructor(private readonly context: Context, element: HTMLElement, private readonly options: CloneConfigurations) {
+	constructor(
+		private readonly context: Context,
+		element: HTMLElement,
+		private readonly options: CloneConfigurations
+	) {
 		this.scrolledElements = [];
 		this.referenceElement = element;
 		this.counters = new CounterState();

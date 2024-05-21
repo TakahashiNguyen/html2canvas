@@ -64,6 +64,6 @@ export const webkitGradient = (
 				angle: (angle + deg(180)) % deg(360),
 				stops,
 				type
-		  }
+			}
 		: {size, shape, stops, position, type};
 };
