@@ -66,9 +66,9 @@
     "ts-node": "^10.1.0",
     "tslib": "^2.3.0",
     "typescript": "^4.3.5",
-    "uglify-js": "^3.13.10",
-    "webpack": "^4.46.0",
-    "yargs": "^17.0.1"
+    "uglify-js": "^3.17.4",
+    "webpack": "^5.91.0",
+    "yargs": "^17.7.2"
   },
   "scripts": {
     "prebuild": "rimraf dist/ && rimraf build/ && mkdirp dist && mkdirp build",
@@ -93,6 +93,7 @@
   "license": "MIT",
   "dependencies": {
     "css-line-break": "^2.1.0",
+    "mkdirp": "^3.0.1",
     "text-segmentation": "^1.0.3"
   }
 }
