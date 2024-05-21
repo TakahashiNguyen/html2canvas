@@ -143,17 +143,17 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: Download library
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@main
         with:
           name: dist
           path: dist
-      - name: Npm install
-        run: npm install && npm ci
       - name: Download test-runner
         uses: actions/download-artifact@main
         with:
           name: build
           path: build
+      - name: Npm install
+        run: npm install && npm ci
       - name: xcode selection
         if: ${{ matrix.config.xcode != '' }}
         run: sudo xcode-select -s "${{ matrix.config.xcode }}"
