@@ -1,14 +1,15 @@
 import express from 'express';
-const cors = require('cors');
-const path = require('path');
-const serveIndex = require('serve-index');
-const proxy = require('html2canvas-proxy');
+import cors from 'cors';
+import path from 'path';
 import yargs from 'yargs';
 import {ScreenshotRequest} from './types';
-const fs = require('fs');
-const bodyParser = require('body-parser');
-const filenamifyUrl = require('filenamify-url');
-const mkdirp = require('mkdirp');
+import fs from 'fs';
+import bodyParser from 'body-parser';
+import filenamifyUrl from 'filenamify-url';
+import * as mkdirp from 'mkdirp';
+
+const serveIndex = require('serve-index');
+const proxy = require('html2canvas-proxy');
 
 export const app = express();
 app.use('/', serveIndex(path.resolve(__dirname, '../'), {icons: true}));
