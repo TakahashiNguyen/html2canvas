@@ -91,9 +91,9 @@ testList
 					throw new Error(`unhandledrejection: ${JSON.stringify(event.reason)}`);
 				});
 
-				const canvas: HTMLCanvasElement = await contentWindow
-					// @ts-ignore
-					.html2canvas(contentWindow.forceElement || contentWindow.document.documentElement, {
+				const canvas: HTMLCanvasElement = await contentWindow// @ts-ignore
+				.html2canvas
+					.default(contentWindow.forceElement || contentWindow.document.documentElement, {
 						removeContainer: true,
 						backgroundColor: '#ffffff',
 						proxy: 'http://localhost:8081/proxy',

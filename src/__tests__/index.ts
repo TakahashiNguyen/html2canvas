@@ -1,4 +1,4 @@
-import {html2canvas} from '../index';
+import html2canvas from '../index';
 
 import {CanvasRenderer} from '../render/canvas/canvas-renderer';
 import {DocumentCloner} from '../dom/document-cloner';
