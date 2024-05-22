@@ -16,11 +16,12 @@ export type Options = CloneOptions &
 		removeContainer?: boolean;
 	};
 
-const html2canvas = (
-	element: HTMLElement,
-	options: Partial<Options> = {}
-): Promise<() => Promise<HTMLCanvasElement>> => {
-	return renderElement(element, options);
+const html2canvas = (element: HTMLElement, options: Partial<Options> = {}): Promise<HTMLCanvasElement> => {
+	return new Promise((resolve, reject) => {
+		renderElement(element, options)
+			.then(async (canvas) => resolve(await canvas()))
+			.catch(reject);
+	});
 };
 
 export default html2canvas;
