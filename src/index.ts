@@ -16,7 +16,7 @@ export type Options = CloneOptions &
 		removeContainer?: boolean;
 	};
 
-const html2canvas = (element: HTMLElement, options: Partial<Options> = {}): Promise<HTMLCanvasElement> => {
+export const html2canvas = (element: HTMLElement, options: Partial<Options> = {}): Promise<HTMLCanvasElement> => {
 	return new Promise((resolve, reject) => {
 		renderElement(element, options)
 			.then(async (canvas) => resolve(await canvas()))
@@ -24,7 +24,12 @@ const html2canvas = (element: HTMLElement, options: Partial<Options> = {}): Prom
 	});
 };
 
-export default html2canvas;
+export const html2canvasRender = (
+	element: HTMLElement,
+	options: Partial<Options> = {}
+): Promise<() => Promise<HTMLCanvasElement>> => {
+	return renderElement(element, options);
+};
 
 if (typeof window !== 'undefined') {
 	CacheStorage.setContext(window);
