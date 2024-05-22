@@ -16,7 +16,10 @@ export type Options = CloneOptions &
 		removeContainer?: boolean;
 	};
 
-const html2canvas = (element: HTMLElement, options: Partial<Options> = {}): Promise<HTMLCanvasElement> => {
+const html2canvas = (
+	element: HTMLElement,
+	options: Partial<Options> = {}
+): Promise<() => Promise<HTMLCanvasElement>> => {
 	return renderElement(element, options);
 };
 
@@ -26,7 +29,10 @@ if (typeof window !== 'undefined') {
 	CacheStorage.setContext(window);
 }
 
-const renderElement = async (element: HTMLElement, opts: Partial<Options>): Promise<HTMLCanvasElement> => {
+const renderElement = async (
+	element: HTMLElement,
+	opts: Partial<Options>
+): Promise<() => Promise<HTMLCanvasElement>> => {
 	if (!element || typeof element !== 'object') {
 		return Promise.reject('Invalid element provided as first argument');
 	}
@@ -117,7 +123,7 @@ const renderElement = async (element: HTMLElement, opts: Partial<Options>): Prom
 	if (foreignObjectRendering) {
 		context.logger.debug(`Document cloned, using foreign object rendering`);
 		const renderer = new ForeignObjectRenderer(context, renderOptions);
-		canvas = await renderer.render(clonedElement);
+		canvas = async () => await renderer.render(clonedElement);
 	} else {
 		context.logger.debug(
 			`Document cloned, element located at ${left},${top} with size ${width}x${height} using computed rendering`
@@ -135,7 +141,7 @@ const renderElement = async (element: HTMLElement, opts: Partial<Options>): Prom
 		);
 
 		const renderer = new CanvasRenderer(context, renderOptions);
-		canvas = await renderer.render(root);
+		canvas = async () => await renderer.render(root);
 	}
 
 	if (opts.removeContainer ?? true) {
