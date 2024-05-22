@@ -15,7 +15,7 @@
 			"es2015",
 			"dom",
 		],
-		"sourceMap": false,
+		"sourceMap": true,
 		"outDir": "dist/lib",
 		"declaration": true,
 		"declarationDir": "dist/types",

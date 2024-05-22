@@ -20,7 +20,7 @@ export default {
 			name: 'testrunner',
 			format: 'iife',
 			banner,
-			sourcemap: false
+			sourcemap: true
 		}
 	],
 	external: [],

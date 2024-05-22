@@ -13,8 +13,8 @@ const banner = `/*!
 export default {
 	input: `src/index.ts`,
 	output: [
-		{file: pkg.main, name: pkg.name, format: 'umd', banner, sourcemap: false},
-		{file: pkg.module, format: 'esm', banner, sourcemap: false}
+		{file: pkg.main, name: pkg.name, format: 'umd', banner, sourcemap: true},
+		{file: pkg.module, format: 'esm', banner, sourcemap: true}
 	],
 	external: [],
 	watch: {
@@ -28,7 +28,7 @@ export default {
 		// Allow json resolution
 		json(),
 		// Compile TypeScript files
-		typescript({sourceMap: false, inlineSources: true}),
+		typescript({sourceMap: true, inlineSources: true}),
 		// Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
 		commonjs({
 			include: 'node_modules/**'

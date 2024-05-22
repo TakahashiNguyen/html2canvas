@@ -91,8 +91,7 @@ testList
 					throw new Error(`unhandledrejection: ${JSON.stringify(event.reason)}`);
 				});
 
-				const canvas: HTMLCanvasElement = await contentWindow// @ts-ignore
-				.html2canvas
+				const canvas: HTMLCanvasElement = await contentWindow.html2canvas // @ts-ignore
 					.default(contentWindow.forceElement || contentWindow.document.documentElement, {
 						removeContainer: true,
 						backgroundColor: '#ffffff',
