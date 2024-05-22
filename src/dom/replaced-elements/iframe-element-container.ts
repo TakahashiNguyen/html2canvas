@@ -25,7 +25,7 @@ export class IFrameElementContainer extends ElementContainer {
 					? parseColor(
 							context,
 							getComputedStyle(iframe.contentWindow.document.documentElement).backgroundColor as string
-					  )
+						)
 					: COLORS.TRANSPARENT;
 				const bodyBackgroundColor = iframe.contentWindow.document.body
 					? parseColor(context, getComputedStyle(iframe.contentWindow.document.body).backgroundColor as string)

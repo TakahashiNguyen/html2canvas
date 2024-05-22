@@ -1,10 +1,7 @@
-'use strict';
-
 import {readFileSync, writeFileSync} from 'fs';
 import {resolve, relative} from 'path';
 import {sync} from 'glob';
-
-const slash = require('slash');
+import * as slash from 'slash';
 
 if (process.argv.length <= 2) {
 	console.log('No ignore.txt file provided');
@@ -35,7 +32,7 @@ const files: string[] = sync('../tests/reftests/**/*.html', {
 	root: resolve(__dirname, '../../')
 });
 
-const testList = files.map((filename: string) => `/${slash(relative('../', filename))}`);
+const testList = files.map((filename: string) => `/${slash.default(relative('../', filename))}`);
 writeFileSync(
 	outputPath,
 	[

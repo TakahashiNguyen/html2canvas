@@ -107,6 +107,7 @@ const findCorner = (width: number, height: number, x: number, y: number, closest
 	];
 
 	return corners.reduce(
+		// @ts-ignore
 		(stat, corner) => {
 			const [cx, cy] = corner;
 			const d = distance(x - cx, y - cy);
@@ -123,6 +124,7 @@ const findCorner = (width: number, height: number, x: number, y: number, closest
 			optimumDistance: closest ? Infinity : -Infinity,
 			optimumCorner: null
 		}
+		// @ts-ignore
 	).optimumCorner as [number, number];
 };
 

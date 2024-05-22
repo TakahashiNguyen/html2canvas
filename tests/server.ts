@@ -1,14 +1,15 @@
-import * as express from 'express';
-const cors = require('cors');
-const path = require('path');
-const serveIndex = require('serve-index');
-const proxy = require('html2canvas-proxy');
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
 import yargs from 'yargs';
 import {ScreenshotRequest} from './types';
-const fs = require('fs');
-const bodyParser = require('body-parser');
-const filenamifyUrl = require('filenamify-url');
-const mkdirp = require('mkdirp');
+import fs from 'fs';
+import bodyParser from 'body-parser';
+import filenamifyUrl from 'filenamify-url';
+import * as mkdirp from 'mkdirp';
+
+const serveIndex = require('serve-index');
+const proxy = require('html2canvas-proxy');
 
 export const app = express();
 app.use('/', serveIndex(path.resolve(__dirname, '../'), {icons: true}));
@@ -80,14 +81,20 @@ screenshotApp.use((error: Error, _req: express.Request, _res: express.Response, 
 
 const args = yargs(process.argv.slice(2)).number(['port', 'cors']).argv;
 
+// @ts-ignore
 if (args.port) {
+	// @ts-ignore
 	app.listen(args.port, () => {
+		// @ts-ignore
 		console.log(`Server running on port ${args.port}`);
 	});
 }
 
+// @ts-ignore
 if (args.cors) {
+	// @ts-ignore
 	corsApp.listen(args.cors, () => {
+		// @ts-ignore
 		console.log(`CORS server running on port ${args.cors}`);
 	});
 }

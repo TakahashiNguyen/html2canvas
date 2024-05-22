@@ -1,7 +1,12 @@
 import {Context} from '../../core/context';
 
 export class Bounds {
-	constructor(readonly left: number, readonly top: number, readonly width: number, readonly height: number) {}
+	constructor(
+		readonly left: number,
+		readonly top: number,
+		readonly width: number,
+		readonly height: number
+	) {}
 
 	add(x: number, y: number, w: number, h: number): Bounds {
 		return new Bounds(this.left + x, this.top + y, this.width + w, this.height + h);
@@ -24,7 +29,7 @@ export class Bounds {
 					domRect.top + context.windowBounds.top,
 					domRect.width,
 					domRect.height
-			  )
+				)
 			: Bounds.EMPTY;
 	}
 
