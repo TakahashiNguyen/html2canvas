@@ -71,18 +71,13 @@ jobs:
           node-version: 20
       - name: Cache node modules
         uses: actions/cache@main
-        env:
-          cache-name: cache-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: |
             ~/.npm
             ./node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
+          restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
       - name: Npm install
         run: npm install && npm ci
       - name: File tests

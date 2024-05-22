@@ -89,7 +89,6 @@
 		"prettier": "^3.2.5",
 		"rimraf": "^5.0.7",
 		"rollup": "^4.17.2",
-		"rollup-plugin-sourcemaps": "^0.6.3",
 		"serve-index": "^1.9.1",
 		"slash": "^5.1.0",
 		"standard-version": "^9.5.0",
