@@ -14,22 +14,22 @@ export class ForeignObjectRenderer extends Renderer {
 		this.canvas = options.canvas ? options.canvas : document.createElement('canvas');
 		this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 		this.options = options;
-		this.canvas.width = Math.floor(options.width * options.scale);
-		this.canvas.height = Math.floor(options.height * options.scale);
-		this.canvas.style.width = `${options.width}px`;
-		this.canvas.style.height = `${options.height}px`;
+		this.canvas.width = Math.floor(options.size.width * options.scale);
+		this.canvas.height = Math.floor(options.size.height * options.scale);
+		this.canvas.style.width = `${options.size.width}px`;
+		this.canvas.style.height = `${options.size.height}px`;
 
 		this.ctx.scale(this.options.scale, this.options.scale);
 		this.ctx.translate(-options.x, -options.y);
 		this.context.logger.debug(
-			`EXPERIMENTAL ForeignObject renderer initialized (${options.width}x${options.height} at ${options.x},${options.y}) with scale ${options.scale}`
+			`EXPERIMENTAL ForeignObject renderer initialized (${options.size.width}x${options.size.height} at ${options.x},${options.y}) with scale ${options.scale}`
 		);
 	}
 
 	async render(element: HTMLElement): Promise<HTMLCanvasElement> {
 		const svg = createForeignObjectSVG(
-			this.options.width * this.options.scale,
-			this.options.height * this.options.scale,
+			this.options.size.width * this.options.scale,
+			this.options.size.height * this.options.scale,
 			this.options.scale,
 			this.options.scale,
 			element
@@ -39,7 +39,12 @@ export class ForeignObjectRenderer extends Renderer {
 
 		if (this.options.backgroundColor) {
 			this.ctx.fillStyle = asString(this.options.backgroundColor);
-			this.ctx.fillRect(0, 0, this.options.width * this.options.scale, this.options.height * this.options.scale);
+			this.ctx.fillRect(
+				0,
+				0,
+				this.options.size.width * this.options.scale,
+				this.options.size.height * this.options.scale
+			);
 		}
 
 		this.ctx.drawImage(img, -this.options.x * this.options.scale, -this.options.y * this.options.scale);

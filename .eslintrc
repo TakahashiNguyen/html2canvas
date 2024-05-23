@@ -1,4 +1,5 @@
 {
+	"ignorePatternig": "rollup.config.ts",
 	"parser": "@typescript-eslint/parser",
 	"extends": [
 		"plugin:@typescript-eslint/recommended",
