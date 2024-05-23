@@ -162,7 +162,7 @@ jobs:
       - name: Clean metadata folder
         run: rm -rf www/static/results/metadata
       - name: Build docs
-        run: cd www && npm install && npm run build && cd ..
+        run: npm run build && cd www && npm run init && npm run build && cd ..
       - name: Upload docs
         uses: actions/upload-artifact@main
         with:
