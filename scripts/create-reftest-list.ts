@@ -3,6 +3,12 @@ import {resolve, relative} from 'path';
 import {sync} from 'glob';
 import * as slash from 'slash';
 
+import {fileURLToPath} from 'url';
+import {dirname} from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 if (process.argv.length <= 2) {
 	console.log('No ignore.txt file provided');
 	process.exit(1);
