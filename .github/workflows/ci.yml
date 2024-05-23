@@ -30,21 +30,8 @@ jobs:
             ./node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
-      - name: Npm install
-        run: npm install && npm ci
-      - name: Build
-        run: npm run build
-      - name: Pack
-        run: |
-          npm pack
-          mv html2canvas-*.tgz html2canvas.tgz
-          tar --list --verbose --file=html2canvas.tgz
-      - name: Upload npm pack
-        uses: actions/upload-artifact@main
-        with:
-          name: npm
-          path: html2canvas.tgz
-          if-no-files-found: error
+      - name: Npm install and build
+        run: npm install && npm ci && npm run build
       - name: Upload dist
         uses: actions/upload-artifact@main
         with:
@@ -61,6 +48,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     name: Test
+    needs: build
     steps:
       - uses: actions/checkout@main
       - uses: actions/setup-node@main
@@ -75,12 +63,8 @@ jobs:
             ./node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
-      - name: Npm install
-        run: npm install && npm ci
-      - name: File tests
-        run: npm run lint
-      - name: Unit tests
-        run: npm run unittest
+      - name: Run tests
+        run: npm ci && npm run lint && npm run unittest
   browser-test:
     strategy:
       fail-fast: false
@@ -128,8 +112,6 @@ jobs:
         with:
           name: build
           path: build
-      - name: Npm install
-        run: npm install && npm ci
       - name: xcode selection
         if: ${{ matrix.config.xcode != '' }}
         run: sudo xcode-select -s "${{ matrix.config.xcode }}"
@@ -162,8 +144,6 @@ jobs:
             ./node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
-      - name: Npm install
-        run: npm install && npm ci
       - name: Download library
         uses: actions/download-artifact@main
         with:
@@ -183,7 +163,7 @@ jobs:
       - name: Clean metadata folder
         run: rm -rf www/static/results/metadata
       - name: Build docs
-        run: npm run build && cd www && npm install && npm run build && cd ..
+        run: cd www && npm install && npm run build && cd ..
       - name: Upload docs
         uses: actions/upload-artifact@main
         with:
