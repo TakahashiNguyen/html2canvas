@@ -3,7 +3,6 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import json from '@rollup/plugin-json';
 import * as pkg from './package.json';
-import terser from '@rollup/plugin-terser';
 
 const banner = `/*!
  * ${pkg.title} ${pkg.version} <${pkg.homepage}>
@@ -25,15 +24,16 @@ export default {
 		// Allow node_modules resolution, so you can use 'external' to control
 		// which external modules to include in the bundle
 		// https://github.com/rollup/rollup-plugin-node-resolve#usage
-		resolve(),
+		resolve({modulesOnly: true}),
 		// Allow json resolution
 		json(),
 		// Compile TypeScript files
-		typescript({sourceMap: true, inlineSources: true}),
+		typescript({sourceMap: true}),
 		// Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
 		commonjs({
-			include: 'node_modules/**'
-		}),
-		terser(),
+			include: 'node_modules/**',
+			extensions: ['.js', '.ts'],
+			sourceMap: true
+		})
 	]
 };
