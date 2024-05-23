@@ -283,7 +283,6 @@ export class CSSParsedCounterDeclaration {
 	}
 }
 
- 
 const parse = (context: Context, descriptor: CSSPropertyDescriptor<any>, style?: string | null) => {
 	const tokenizer = new Tokenizer();
 	const value = style !== null && typeof style !== 'undefined' ? style.toString() : descriptor.initialValue;

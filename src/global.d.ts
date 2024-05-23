@@ -9,6 +9,5 @@ interface DocumentType extends Node, ChildNode {
 }
 
 interface Document {
-	 
 	fonts: any;
 }

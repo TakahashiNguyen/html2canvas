@@ -1,7 +1,6 @@
 import {Logger} from '../logger';
 
 describe('logger', () => {
-	 
 	let infoSpy: any;
 
 	beforeEach(() => {

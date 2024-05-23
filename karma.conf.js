@@ -130,9 +130,6 @@ module.exports = function(config) {
         stable_chrome: {
             base: 'ChromeHeadless'
         },
-        stable_firefox: {
-            base: 'Firefox'
-        }
     };
 
     const injectTypedArrayPolyfills = function(files) {

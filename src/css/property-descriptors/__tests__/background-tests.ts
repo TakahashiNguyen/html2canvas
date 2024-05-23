@@ -16,7 +16,6 @@ const backgroundImageParse = (context: Context, value: string) =>
 describe('property-descriptors', () => {
 	let context: Context;
 	beforeEach(() => {
-		 
 		context = new Context({} as any, {} as any);
 	});
 	describe('background-image', () => {

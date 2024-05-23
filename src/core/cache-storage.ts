@@ -33,7 +33,6 @@ export interface ResourceOptions {
 }
 
 export class Cache {
-
 	private readonly _cache: {[key: string]: Promise<any>} = {};
 
 	constructor(
@@ -56,7 +55,6 @@ export class Cache {
 
 		return result;
 	}
-
 
 	match(src: string): Promise<any> {
 		return this._cache[src];

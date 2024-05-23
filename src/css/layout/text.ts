@@ -93,9 +93,8 @@ const createRange = (node: Text, offset: number, length: number): Range => {
 
 export const segmentGraphemes = (value: string): string[] => {
 	if (FEATURES.SUPPORT_NATIVE_TEXT_SEGMENTATION) {
-		 
 		const segmenter = new (Intl as any).Segmenter(void 0, {granularity: 'grapheme'});
-		 
+
 		return Array.from(segmenter.segment(value)).map((segment: any) => segment.segment);
 	}
 
@@ -104,11 +103,10 @@ export const segmentGraphemes = (value: string): string[] => {
 
 const segmentWords = (value: string, styles: CSSParsedDeclaration): string[] => {
 	if (FEATURES.SUPPORT_NATIVE_TEXT_SEGMENTATION) {
-		 
 		const segmenter = new (Intl as any).Segmenter(void 0, {
 			granularity: 'word'
 		});
-		 
+
 		return Array.from(segmenter.segment(value)).map((segment: any) => segment.segment);
 	}
 

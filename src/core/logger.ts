@@ -16,12 +16,9 @@ export class Logger {
 		this.start = Date.now();
 	}
 
-	 
 	debug(...args: unknown[]): void {
 		if (this.enabled) {
-			 
 			if (typeof window !== 'undefined' && window.console && typeof console.debug === 'function') {
-				 
 				console.debug(this.id, `${this.getTime()}ms`, ...args);
 			} else {
 				this.info(...args);
@@ -33,23 +30,17 @@ export class Logger {
 		return Date.now() - this.start;
 	}
 
-	 
 	info(...args: unknown[]): void {
 		if (this.enabled) {
-			 
 			if (typeof window !== 'undefined' && window.console && typeof console.info === 'function') {
-				 
 				console.info(this.id, `${this.getTime()}ms`, ...args);
 			}
 		}
 	}
 
-	 
 	warn(...args: unknown[]): void {
 		if (this.enabled) {
-			 
 			if (typeof window !== 'undefined' && window.console && typeof console.warn === 'function') {
-				 
 				console.warn(this.id, `${this.getTime()}ms`, ...args);
 			} else {
 				this.info(...args);
@@ -57,12 +48,9 @@ export class Logger {
 		}
 	}
 
-	 
 	error(...args: unknown[]): void {
 		if (this.enabled) {
-			 
 			if (typeof window !== 'undefined' && window.console && typeof console.error === 'function') {
-				 
 				console.error(this.id, `${this.getTime()}ms`, ...args);
 			} else {
 				this.info(...args);

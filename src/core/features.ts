@@ -214,7 +214,7 @@ export const FEATURES = {
 	},
 	get SUPPORT_NATIVE_TEXT_SEGMENTATION(): boolean {
 		'use strict';
-		 
+
 		const value = !!(typeof Intl !== 'undefined' && (Intl as any).Segmenter);
 		Object.defineProperty(FEATURES, 'SUPPORT_NATIVE_TEXT_SEGMENTATION', {value});
 		return value;

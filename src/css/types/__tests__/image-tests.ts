@@ -16,7 +16,6 @@ import {Context} from '../../../core/context';
 describe('types', () => {
 	let context: Context;
 	beforeEach(() => {
-		 
 		context = new Context({} as any, {} as any);
 	});
 
