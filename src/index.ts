@@ -7,6 +7,7 @@ import {CanvasRenderer, RenderConfigurations, RenderOptions} from './render/canv
 import {ForeignObjectRenderer} from './render/canvas/foreignobject-renderer';
 import {Context, ContextOptions} from './core/context';
 import {ElementContainer} from './dom/element-container';
+import { Vector2 } from 'three';
 
 export type Options = CloneOptions &
 	WindowOptions &
@@ -119,8 +120,7 @@ export class HTML2CanvasClass {
 			scale: opts.scale ?? defaultView.devicePixelRatio ?? 1,
 			x: (opts.x ?? 0) + left,
 			y: (opts.y ?? 0) + top,
-			width: opts.width ?? Math.ceil(width),
-			height: opts.height ?? Math.ceil(height)
+			size: opts.size ?? new Vector2(width, height)
 		};
 
 		let renderer, target;

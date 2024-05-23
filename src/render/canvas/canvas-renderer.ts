@@ -44,6 +44,7 @@ import {PAINT_ORDER_LAYER} from '../../css/property-descriptors/paint-order';
 import {Renderer} from '../renderer';
 import {Context} from '../../core/context';
 import {DIRECTION} from '../../css/property-descriptors/direction';
+import {Vector2} from 'three';
 
 export type RenderConfigurations = RenderOptions & {
 	backgroundColor: Color | null;
@@ -54,8 +55,7 @@ export interface RenderOptions {
 	canvas?: HTMLCanvasElement;
 	x: number;
 	y: number;
-	width: number;
-	height: number;
+	size: Vector2;
 }
 
 const MASK_OFFSET = 10000;
@@ -71,10 +71,10 @@ export class CanvasRenderer extends Renderer {
 		this.canvas = options.canvas ? options.canvas : document.createElement('canvas');
 		this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 		if (!options.canvas) {
-			this.canvas.width = Math.floor(options.width * options.scale);
-			this.canvas.height = Math.floor(options.height * options.scale);
-			this.canvas.style.width = `${options.width}px`;
-			this.canvas.style.height = `${options.height}px`;
+			this.canvas.width = Math.floor(options.size.width * options.scale);
+			this.canvas.height = Math.floor(options.size.height * options.scale);
+			this.canvas.style.width = `${options.size.width}px`;
+			this.canvas.style.height = `${options.size.height}px`;
 		}
 		this.fontMetrics = new FontMetrics(document);
 		this.ctx.scale(this.options.scale, this.options.scale);
@@ -82,7 +82,7 @@ export class CanvasRenderer extends Renderer {
 		this.ctx.textBaseline = 'bottom';
 		this._activeEffects = [];
 		this.context.logger.debug(
-			`Canvas renderer initialized (${options.width}x${options.height}) with scale ${options.scale}`
+			`Canvas renderer initialized (${options.size.width}x${options.size.height}) with scale ${options.scale}`
 		);
 	}
 
@@ -309,8 +309,7 @@ export class CanvasRenderer extends Renderer {
 				backgroundColor: container.backgroundColor,
 				x: 0,
 				y: 0,
-				width: container.width,
-				height: container.height
+				size: new Vector2(container.width, container.height)
 			});
 
 			const canvas = await iframeRenderer.render(container.tree);
@@ -855,7 +854,7 @@ export class CanvasRenderer extends Renderer {
 	async render(element: ElementContainer): Promise<HTMLCanvasElement> {
 		if (this.options.backgroundColor) {
 			this.ctx.fillStyle = asString(this.options.backgroundColor);
-			this.ctx.fillRect(this.options.x, this.options.y, this.options.width, this.options.height);
+			this.ctx.fillRect(this.options.x, this.options.y, this.options.size.width, this.options.size.height);
 		}
 
 		const stack = parseStackingContexts(element);
