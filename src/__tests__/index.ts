@@ -42,8 +42,7 @@ describe('html2canvas', () => {
 			expect.objectContaining({
 				backgroundColor: 0xffffffff,
 				scale: 1,
-				height: 50,
-				width: 200,
+				size: {x: 200, y: 50},
 				x: 0,
 				y: 0,
 				canvas: undefined
@@ -81,8 +80,7 @@ describe('html2canvas', () => {
 			expect.objectContaining({
 				backgroundColor: 0xffffffff,
 				scale: 1,
-				height: 50,
-				width: 200,
+				size: {x: 200, y: 50},
 				x: 0,
 				y: 0,
 				canvas: undefined
