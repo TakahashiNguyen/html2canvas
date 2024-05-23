@@ -31,7 +31,7 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
       - name: Npm install and build
-        run: npm install && npm ci && npm run build
+        run: npm run init && npm run build
       - name: Upload dist
         uses: actions/upload-artifact@main
         with:
@@ -64,7 +64,7 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
       - name: Run tests
-        run: npm ci && npm run lint && npm run unittest
+        run: npm run init && npm run lint && npm run unittest
   browser-test:
     strategy:
       fail-fast: false
