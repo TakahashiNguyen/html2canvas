@@ -151,7 +151,7 @@ jobs:
         uses: actions/download-artifact@main
         with:
           name: dist
-          path: www/static/dist
+          path: dist
       - name: Download test results
         uses: actions/download-artifact@main
         with:
@@ -166,7 +166,7 @@ jobs:
       - name: Clean metadata folder
         run: rm -rf www/static/results/metadata
       - name: Build docs
-        run: npm run build && cd www && npm install && npm run build && cd ..
+        run:  cp -R dist www/static/dist && cd www && npm install && npm run build && cd ..
       - name: Upload docs
         uses: actions/upload-artifact@main
         with:
