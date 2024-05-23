@@ -40,7 +40,7 @@
 		"watch": "rollup -c rollup.config.ts -w",
 		"watch:unittest": "mocha --require ts-node/register --watch-extensions ts -w src/**/__tests__/*.ts",
 		"start": "ts-node tests/server --port=8080 --cors=8081",
-		"init": "rimraf node_modules/ && npm i --package-lock-only && npm ci"
+		"init": "npm i --package-lock-only && npm ci"
 	},
 	"homepage": "https://html2canvas.hertzen.com",
 	"license": "MIT",
