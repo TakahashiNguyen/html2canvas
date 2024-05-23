@@ -28,6 +28,7 @@ jobs:
           path: |
             ~/.npm
             ./node_modules
+            ./www/node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
       - name: Npm install and build
@@ -61,6 +62,7 @@ jobs:
           path: |
             ~/.npm
             ./node_modules
+            ./www/node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
       - name: Run tests
@@ -100,6 +102,7 @@ jobs:
           path: |
             ~/.npm
             ./node_modules
+            ./www/node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
       - name: Download library
@@ -141,6 +144,7 @@ jobs:
           path: |
             ~/.npm
             ./node_modules
+            ./www/node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
       - name: Download library
