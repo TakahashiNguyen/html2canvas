@@ -30,10 +30,10 @@ if (typeof window !== 'undefined') {
 }
 
 export class HTML2CanvasClass {
-	private render!: ForeignObjectRenderer | CanvasRenderer;
+	private renderer!: ForeignObjectRenderer | CanvasRenderer;
 	private target!: HTMLElement | ElementContainer;
-	constructor(render: ForeignObjectRenderer | CanvasRenderer, target: HTMLElement | ElementContainer) {
-		this.render = render;
+	constructor(renderer: ForeignObjectRenderer | CanvasRenderer, target: HTMLElement | ElementContainer) {
+		this.renderer = renderer;
 		this.target = target;
 	}
 	static async init(element: HTMLElement, opts: Partial<Options>) {
@@ -123,10 +123,10 @@ export class HTML2CanvasClass {
 			height: opts.height ?? Math.ceil(height)
 		};
 
-		let render, target;
+		let renderer, target;
 		if (foreignObjectRendering) {
 			context.logger.debug(`Document cloned, using foreign object rendering`);
-			render = new ForeignObjectRenderer(context, renderOptions);
+			renderer = new ForeignObjectRenderer(context, renderOptions);
 			target = clonedElement;
 		} else {
 			context.logger.debug(
@@ -144,7 +144,7 @@ export class HTML2CanvasClass {
 				`Starting renderer for element at ${renderOptions.x},${renderOptions.y} with size ${renderOptions.width}x${renderOptions.height}`
 			);
 
-			render = new CanvasRenderer(context, renderOptions);
+			renderer = new CanvasRenderer(context, renderOptions);
 			target = root;
 		}
 
@@ -155,12 +155,12 @@ export class HTML2CanvasClass {
 		}
 
 		context.logger.debug(`Finished rendering`);
-		return new HTML2CanvasClass(render, target);
+		return new HTML2CanvasClass(renderer, target);
 	}
 
-	async renderer() {
+	async render() {
 		// @ts-ignore
-		return await this.render.render(this.target);
+		return await this.renderer.render(this.target);
 	}
 }
 
