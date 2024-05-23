@@ -14,7 +14,7 @@
 		"lib": [
 			"dom",
 		],
-		"sourceMap": true,
+		"sourceMap": false,
 		"outDir": "dist/lib",
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,

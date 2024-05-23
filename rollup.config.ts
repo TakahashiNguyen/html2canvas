@@ -14,8 +14,8 @@ export default {
 	treeshake: 'smallest',
 	input: `src/index.ts`,
 	output: [
-		{file: pkg.main, name: pkg.name, format: 'umd', banner, sourcemap: true},
-		{file: pkg.module, format: 'esm', banner, sourcemap: true}
+		{file: pkg.main, name: pkg.name, format: 'umd', banner, sourcemap: false},
+		{file: pkg.module, format: 'esm', banner, sourcemap: false}
 	],
 	external: [],
 	watch: {
@@ -29,12 +29,12 @@ export default {
 		// Allow json resolution
 		json(),
 		// Compile TypeScript files
-		typescript({sourceMap: true}),
+		typescript({sourceMap: false}),
 		// Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
 		commonjs({
 			include: 'node_modules/**',
 			extensions: ['.js', '.ts'],
-			sourceMap: true
+			sourceMap: false
 		})
 	]
 };
