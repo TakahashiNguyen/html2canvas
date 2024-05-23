@@ -18,6 +18,8 @@
 		"outDir": "dist/lib",
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
+		"esModuleInterop": true,
+		"moduleResolution": "node",
 	},
 	"include": [
 		"src"

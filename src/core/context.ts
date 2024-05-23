@@ -13,7 +13,6 @@ export class Context {
 	readonly logger: Logger;
 	readonly cache: Cache;
 
-
 	constructor(
 		options: ContextOptions,
 		public windowBounds: Bounds

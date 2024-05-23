@@ -38,12 +38,12 @@ const testIOSLineBreak = (document: Document) => {
 
 	const node = testElement.firstChild as Text;
 
-	const textList = toCodePoints(node.data).map((i) => fromCodePoint(i));
+	const textList = toCodePoints(node.data).map((i: any) => fromCodePoint(i));
 	let offset = 0;
 	let prev: DOMRect = {} as DOMRect;
 
 	// ios 13 does not handle range getBoundingClientRect line changes correctly #2177
-	const supports = textList.every((text, i) => {
+	const supports = textList.every((text: string | any[], i: number) => {
 		range.setStart(node, offset);
 		range.setEnd(node, offset + text.length);
 		const rect = range.getBoundingClientRect();

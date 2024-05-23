@@ -134,7 +134,7 @@ const breakWords = (str: string, styles: CSSParsedDeclaration): string[] => {
 			const value = bk.value.slice();
 			const codePoints = toCodePoints(value);
 			let word = '';
-			codePoints.forEach((codePoint) => {
+			codePoints.forEach((codePoint: number) => {
 				if (wordSeparators.indexOf(codePoint) === -1) {
 					word += fromCodePoint(codePoint);
 				} else {
