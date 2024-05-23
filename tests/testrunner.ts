@@ -2,16 +2,13 @@ import {testList, ignoredTests} from '../build/reftests';
 // @ts-ignore
 import {default as platform} from 'platform';
 // @ts-ignore
-import Promise from 'es6-promise';
 import {ScreenshotRequest} from './types';
 
-// @ts-ignore
-window.Promise = Promise;
 const testRunnerUrl = location.href;
 const hasHistoryApi = typeof window.history !== 'undefined' && typeof window.history.replaceState !== 'undefined';
 
 const uploadResults = (canvas: HTMLCanvasElement, url: string) => {
-	return new Promise((resolve: () => void, reject: (error: string) => void) => {
+	return new Promise<void>((resolve, reject) => {
 		// @ts-ignore
 		const xhr = 'withCredentials' in new XMLHttpRequest() ? new XMLHttpRequest() : new XDomainRequest();
 
@@ -28,8 +25,8 @@ const uploadResults = (canvas: HTMLCanvasElement, url: string) => {
 			screenshot: canvas.toDataURL(),
 			test: url,
 			platform: {
-				name: platform.name,
-				version: platform.version
+				name: platform.name!,
+				version: platform.version!
 			},
 			devicePixelRatio: window.devicePixelRatio || 1,
 			windowWidth: window.innerWidth,
@@ -47,8 +44,8 @@ testList
 	})
 	.forEach((url) => {
 		describe(url, function () {
-			this.timeout(60000);
-			this.retries(2);
+			// @ts-ignore
+			this.timeout(60000), this.retries(2);
 			const windowWidth = 800;
 			const windowHeight = 600;
 			const testContainer = document.createElement('iframe');
@@ -91,14 +88,18 @@ testList
 					throw new Error(`unhandledrejection: ${JSON.stringify(event.reason)}`);
 				});
 
-				const canvas: HTMLCanvasElement = await contentWindow.html2canvas // @ts-ignore
-					.default(contentWindow.forceElement || contentWindow.document.documentElement, {
+				// @ts-ignore
+				const canvas: HTMLCanvasElement = await contentWindow.html2canvas.default(
+					// @ts-ignore
+					contentWindow.forceElement || contentWindow.document.documentElement,
+					{
 						removeContainer: true,
 						backgroundColor: '#ffffff',
 						proxy: 'http://localhost:8081/proxy',
 						// @ts-ignore
 						...(contentWindow.h2cOptions || {})
-					});
+					}
+				);
 
 				try {
 					(canvas.getContext('2d') as CanvasRenderingContext2D).getImageData(0, 0, canvas.width, canvas.height);

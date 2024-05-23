@@ -8,11 +8,11 @@ export type ContextOptions = {
 } & ResourceOptions;
 
 export class Context {
+	private static instanceCount = 1;
 	private readonly instanceName = `#${Context.instanceCount++}`;
 	readonly logger: Logger;
 	readonly cache: Cache;
 
-	private static instanceCount = 1;
 
 	constructor(
 		options: ContextOptions,

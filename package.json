@@ -64,7 +64,6 @@
 		"chromeless": "^1.5.2",
 		"cors": "^2.8.5",
 		"css-line-break": "^2.1.0",
-		"es6-promise": "^4.2.8",
 		"eslint": "^9.3.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-prettier": "^5.1.3",

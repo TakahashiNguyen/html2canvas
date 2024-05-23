@@ -11,6 +11,7 @@ const banner = `/*!
  */`;
 
 export default {
+	treeshake: 'smallest',
 	input: `src/index.ts`,
 	output: [
 		{file: pkg.main, name: pkg.name, format: 'umd', banner, sourcemap: true},

@@ -10,19 +10,14 @@
 			"node",
 			"jest"
 		],
-		"target": "ES5",
+		"target": "ES2022",
 		"lib": [
-			"es2015",
 			"dom",
 		],
 		"sourceMap": true,
 		"outDir": "dist/lib",
-		"declaration": true,
-		"declarationDir": "dist/types",
-		"resolveJsonModule": true,
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
-		"esModuleInterop": true,
 	},
 	"include": [
 		"src"

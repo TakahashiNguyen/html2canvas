@@ -159,7 +159,7 @@ export class CanvasRenderer extends Renderer {
 
 	private createFontStyle(styles: CSSParsedDeclaration): string[] {
 		const fontVariant = styles.fontVariant
-			.filter((variant) => variant === 'normal' || variant === 'small-caps')
+			.filter((variant: string) => variant === 'normal' || variant === 'small-caps')
 			.join('');
 		const fontFamily = fixIOSSystemFonts(styles.fontFamily).join(', ');
 		const fontSize = isDimensionToken(styles.fontSize)
@@ -181,7 +181,7 @@ export class CanvasRenderer extends Renderer {
 		const paintOrder = styles.paintOrder;
 
 		text.textBounds.forEach((text) => {
-			paintOrder.forEach((paintOrderLayer) => {
+			paintOrder.forEach((paintOrderLayer: any) => {
 				switch (paintOrderLayer) {
 					case PAINT_ORDER_LAYER.FILL:
 						this.ctx.fillStyle = asString(styles.color);
@@ -209,7 +209,7 @@ export class CanvasRenderer extends Renderer {
 
 						if (styles.textDecorationLine.length) {
 							this.ctx.fillStyle = asString(styles.textDecorationColor || styles.color);
-							styles.textDecorationLine.forEach((textDecorationLine) => {
+							styles.textDecorationLine.forEach((textDecorationLine: any) => {
 								switch (textDecorationLine) {
 									case TEXT_DECORATION_LINE.UNDERLINE:
 										// Draws a line at the baseline of the font

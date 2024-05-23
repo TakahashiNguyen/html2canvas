@@ -6,7 +6,8 @@
 			"mocha"
 		],
 		"rootDir": "../",
-		"declaration": false
+		"declaration": false,
+		"allowSyntheticDefaultImports": true
 	},
 	"include": [
 		"**/*.ts"
