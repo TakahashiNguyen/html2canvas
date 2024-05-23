@@ -3,6 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import json from '@rollup/plugin-json';
 import * as pkg from './package.json';
+import terser from '@rollup/plugin-terser';
 
 const banner = `/*!
  * ${pkg.title} ${pkg.version} <${pkg.homepage}>
@@ -31,7 +32,8 @@ export default {
 		typescript({sourceMap: true, inlineSources: true}),
 		// Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
 		commonjs({
-			// include: 'node_modules/**'
-		})
+			include: 'node_modules/**'
+		}),
+		terser(),
 	]
 };
