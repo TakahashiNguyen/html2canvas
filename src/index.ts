@@ -7,7 +7,7 @@ import {CanvasRenderer, RenderConfigurations, RenderOptions} from './render/canv
 import {ForeignObjectRenderer} from './render/canvas/foreignobject-renderer';
 import {Context, ContextOptions} from './core/context';
 import {ElementContainer} from './dom/element-container';
-import { Vector2 } from 'three';
+import {Vector2} from 'three';
 
 export type Options = CloneOptions &
 	WindowOptions &
@@ -141,7 +141,7 @@ export class HTML2CanvasClass {
 			}
 
 			context.logger.debug(
-				`Starting renderer for element at ${renderOptions.x},${renderOptions.y} with size ${renderOptions.width}x${renderOptions.height}`
+				`Starting renderer for element at ${renderOptions.x},${renderOptions.y} with size ${renderOptions.size.width}x${renderOptions.size.height}`
 			);
 
 			renderer = new CanvasRenderer(context, renderOptions);
