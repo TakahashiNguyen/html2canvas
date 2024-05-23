@@ -127,7 +127,7 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     name: Build docs
-    needs: browser-test
+    needs: [browser-test, test]
     steps:
       - uses: actions/checkout@main
       - uses: actions/setup-node@main
