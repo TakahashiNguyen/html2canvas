@@ -30,11 +30,11 @@ if (typeof window !== 'undefined') {
 }
 
 export class HTML2CanvasClass {
-	private render!: CanvasRenderer | ForeignObjectRenderer;
-	private target!: HTMLElement | ElementContainer;
+	render!: ForeignObjectRenderer | CanvasRenderer;
+	target!: HTMLElement | ElementContainer;
 	constructor(element: HTMLElement, opts: Partial<Options>) {
 		// @ts-ignore
-		return new Promise(async (resolve) => {
+		return new Promise<HTML2CanvasClass>(async (resolve) => {
 			if (!element || typeof element !== 'object') {
 				throw Error('Invalid element provided as first argument');
 			}
